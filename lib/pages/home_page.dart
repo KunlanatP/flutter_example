@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_example/classes/language.dart';
 import 'package:flutter_example/classes/language_constants.dart';
 import 'package:flutter_example/main.dart';
-import 'package:flutter_example/router/route_constants.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_example/theme/theme_manager.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,18 +17,19 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
-  void _showSuccessDialog() {
-    showTimePicker(context: context, initialTime: TimeOfDay.now());
-  }
-
   @override
   Widget build(BuildContext context) {
+    final text = MediaQuery.of(context).platformBrightness == Brightness.dark
+        ? translation(context).darkTheme
+        : translation(context).lightTheme;
+
     final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(translation(context).homePage),
         actions: [
+          const ChangeThemeButtonWidget(),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: DropdownButton<Language>(
@@ -58,145 +59,28 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      drawer: Drawer(
-        child: _drawerList(theme),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
-        child: _mainForm(context, theme),
-      ),
-    );
-  }
-
-  Form _mainForm(BuildContext context, ThemeData theme) {
-    return Form(
-      key: _key,
-      child: Column(
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 4,
-            child: Center(
-              child: Text(
-                translation(context).personalInformation,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.headline5,
-              ),
-            ),
-          ),
-          TextFormField(
-            validator: (value) {
-              if (value != null && value.isEmpty) {
-                return translation(context).requiredField;
-              }
-              return null;
-            },
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              labelText: translation(context).name,
-              hintText: translation(context).nameHint,
-            ),
-          ),
-          const SizedBox(height: 20),
-          TextFormField(
-            validator: (value) {
-              if (value != null && value.isEmpty) {
-                return translation(context).requiredField;
-              }
-              return null;
-            },
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              labelText: translation(context).email,
-              hintText: translation(context).emailHint,
-            ),
-          ),
-          const SizedBox(height: 20),
-          TextFormField(
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              hintText: translation(context).dateOfBirth,
-            ),
-            onTap: () async {
-              FocusScope.of(context).requestFocus(FocusNode());
-              await showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(DateTime.now().year),
-                lastDate: DateTime(DateTime.now().year + 20),
-              );
-            },
-          ),
-          const SizedBox(height: 20),
-          MaterialButton(
-            onPressed: () {
-              if (_key.currentState != null && _key.currentState!.mounted) {
-                _showSuccessDialog();
-              }
-            },
-            minWidth: double.infinity,
-            height: 50,
-            color: theme.primaryColor,
-            child: Text(
-              translation(context).submitInfo,
-              style: theme.textTheme.headline5!.copyWith(color: Colors.white),
-            ),
-          ),
-        ],
+      body: Center(
+        child: Text(
+          text,
+          style: theme.textTheme.headline5,
+        ),
       ),
     );
   }
+}
 
-  Container _drawerList(ThemeData theme) {
-    TextStyle textStyle = theme.textTheme.headline6!.copyWith(
-      color: Colors.white,
-    );
-    return Container(
-      color: Theme.of(context).primaryColor,
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          const DrawerHeader(
-            child: SizedBox(
-              height: 100,
-              child: CircleAvatar(),
-            ),
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.info,
-              color: Colors.white,
-              size: 30,
-            ),
-            title: Text(
-              translation(context).aboutUs,
-              style: textStyle,
-            ),
-            onTap: () {
-              // To close the Drawer
-              Navigator.pop(context);
-              // Navigating to About Page
-              Navigator.pushNamed(context, aboutRoute);
-            },
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.settings,
-              color: Colors.white,
-              size: 30,
-            ),
-            title: Text(
-              translation(context).settings,
-              style: textStyle,
-            ),
-            onTap: () {
-              // To close the Drawer
-              Navigator.pop(context);
-              // Navigating to About Page
-              Navigator.pushNamed(context, settingsRoute);
-            },
-          ),
-        ],
-      ),
+class ChangeThemeButtonWidget extends StatelessWidget {
+  const ChangeThemeButtonWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final themeManager = Provider.of<ThemeManager>(context);
+    return Switch.adaptive(
+      value: themeManager.isDarkMode,
+      onChanged: (value) {
+        final provider = Provider.of<ThemeManager>(context, listen: false);
+        provider.toggleTheme(value);
+      },
     );
   }
 }
