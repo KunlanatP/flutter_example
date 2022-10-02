@@ -39,6 +39,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^3.0.1
 
+  fluentui_system_icons: ^1.1.182
+  ionicons: ^0.2.1
+  iconsax: ^0.0.8
+
   intl: ^0.17.0
   shared_preferences: ^2.0.15
   provider: ^6.0.3

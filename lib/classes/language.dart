@@ -16,7 +16,6 @@ class Language {
     return <Language>[
       Language(id: 1, flag: '🇬🇧', name: 'English', languageCode: 'en'),
       Language(id: 2, flag: '🇹🇭', name: 'ภาษาไทย', languageCode: 'th'),
-      Language(id: 3, flag: '🇯🇵', name: '日本', languageCode: 'ja'),
     ];
   }
 }

@@ -13,5 +13,22 @@
   "changeLanguage": "Change Language",
   "about": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
   "darkTheme": "Dark Theme",
-  "lightTheme": "Light Theme"
+  "lightTheme": "Light Theme",
+
+
+
+  "english_code": "English",
+  "thai_code": "Thai",
+  "welcome_title": "Welcome!",
+  "sign_in_to_continue_title": "Sign in to continue",
+  "username_or_email_title": "Username or Email :",
+  "username_or_email_hint": "Enter username or email",
+  "password_title": "Password :",
+  "password_hint": "Enter password",
+  "btn_sign_in": "Sign in",
+  "forgot_password": "Forgot password?",
+  "or": "or",
+  "no_account_label": "Don’t have an account ?",
+  "btn_sign_up": "Sign up",
+  "btn_back": "Back"
 }
