@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_example/classes/language_constants.dart';
-import 'package:flutter_example/router/custom_router.dart';
 import 'package:flutter_example/router/route_constants.dart';
 import 'package:flutter_example/theme/theme_constants.dart';
 import 'package:flutter_example/theme/theme_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:routemaster/routemaster.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
       builder: (context, _) {
         final themeManager = Provider.of<ThemeManager>(context);
 
-        return MaterialApp(
+        return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Example',
           theme: ThemeConstants.lightTheme,
@@ -52,8 +52,8 @@ class _MyAppState extends State<MyApp> {
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           locale: _locale,
-          onGenerateRoute: CustomRouter.generatedRoute,
-          initialRoute: loginRoute,
+          routerDelegate: RoutemasterDelegate(routesBuilder: (_) => routes),
+          routeInformationParser: const RoutemasterParser(),
         );
       },
     );

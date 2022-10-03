@@ -18,13 +18,16 @@ class _LoginPageState extends State<LoginPage> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        actions: changeLanguageButton(context),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 50),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ChangeLanguageButton(),
-            const SizedBox(height: 100),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

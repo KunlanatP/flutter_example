@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_example/classes/language_constants.dart';
 import 'package:flutter_example/widgets/custom_text_button.dart';
 import 'package:flutter_example/widgets/form_input.dart';
+import 'package:routemaster/routemaster.dart';
 
 class FormLogin extends StatefulWidget {
   const FormLogin({super.key});
@@ -98,7 +99,7 @@ class _FormLoginState extends State<FormLogin> {
           const SizedBox(height: 20),
           MaterialButton(
             onPressed: () async {
-              Navigator.of(context).pushReplacementNamed('home');
+              Routemaster.of(context).push('/home');
             },
             minWidth: double.infinity,
             height: 42,
